@@ -8,6 +8,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
+  background: antiquewhite;
   color: #212121;
   line-height: 1.5;
 }
@@ -17,4 +18,20 @@ body {
   padding: 8px;
   max-width: 320px;
   margin-bottom: 16px;
+}
+.title {
+  display: flex;
+  align-items: center;
+}
+.title .img{
+  margin-right: 15px;
+  border-radius: 50%;
+}
+.country-list{
+  list-style: none;
+  padding: 0px;
+}
+.item .title{
+  font-size: medium;
+
 }
