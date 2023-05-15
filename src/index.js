@@ -23,16 +23,12 @@ function OnInput(event){
         refs.ulEl.innerHTML="";
         refs.divInfoEl.innerHTML="";
         return Notify.warning('Empty field. Type the country name!');
-        
     }
-   
-    // console.log(value);
 
     fetchCountries(value)
         .then(res => {
             if(res.length > 1){
                 renderListCountries(res)
-                // Notify.info('Too many matches found. Please enter a more specific name.');
                 refs.divInfoEl.textContent=""
             }else{
                 renderCountryHTML(res)
@@ -40,7 +36,7 @@ function OnInput(event){
                 refs.ulEl.textContent =""
             }
         })
-        .catch(err => Notify.failure("Oops, there is no country with that name"))
+        .catch(onError)
 }
 function renderListCountries(countryList){
     const countryItemRender = countryList.map(({name:{official},flags:{svg}})=>{
@@ -53,11 +49,9 @@ function renderListCountries(countryList){
        `
     })
     const renderCountry = countryItemRender.join("");
-
-    console.log(countryItemRender.length);
+    // console.log(countryItemRender.length);
     if(countryItemRender.length < 10){
         refs.ulEl.insertAdjacentHTML("beforeend", renderCountry)
-        console.dir()
     }else {
         Notify.info('Too many matches found. Please enter a more specific name.');
     }
@@ -77,5 +71,13 @@ function renderCountryHTML(country){
             <img class="img" src = "${svg}" alt="${official}"/ width ="500" height ="350">
         `
     }).join(" ")
-    refs.divInfoEl.insertAdjacentHTML("beforeend", countryRender)
+    if(refs.divInfoEl.textContent === ""){
+        return refs.divInfoEl.insertAdjacentHTML("beforeend", countryRender)
+    }
+   
+}
+
+function onError(err){
+    Notify.failure("Oops, there is no country with that name")
+    refs.ulEl.innerHTML="";
 }
